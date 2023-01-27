@@ -90,14 +90,14 @@ app.post("/login", async (request, response) => {
     }
   }
 });
-//
+
 app.get("/users", async (request, response) => {
   let query = `
     SELECT * FROM user ORDER BY username;`;
   let dbResponse = await db.all(query);
   response.send(dbResponse);
 });
-//
+
 
 const authenticateToken = (request, response, next) => {
   let jwtToken;
@@ -120,7 +120,7 @@ const authenticateToken = (request, response, next) => {
     });
   }
 };
-//
+
 
 app.get("/followers", async (request, response) => {
   let query = `
@@ -190,7 +190,7 @@ let followCheck = async (request, response, next) => {
   }
 };
 
-/////
+
 app.get(
   "/tweets/:tweetId",
   authenticateToken,
@@ -205,7 +205,7 @@ app.get(
     response.send(dbResponse);
   }
 );
-//
+
 
 app.get(
   "/tweets/:tweetId/likes",
@@ -246,7 +246,7 @@ let selfCheck = async (request, response, next) => {
     response.send(`Invalid Request`);
   }
 };
-//delete tweet
+
 app.delete(
   "/tweets/:tweetId/",
   authenticateToken,
@@ -259,7 +259,7 @@ app.delete(
   }
 );
 
-//
+
 app.post("/user/tweets/", authenticateToken, async (request, response) => {
   let details = request.body;
   let { tweet } = details;
@@ -276,7 +276,7 @@ app.post("/user/tweets/", authenticateToken, async (request, response) => {
   let dbResponse = await db.run(query2);
   response.send("Created a Tweet");
 });
-//
+
 
 app.get("/user/tweets", authenticateToken, async (request, response) => {
   let query = `select user_id from user where username like '%${request.username}%';`;
