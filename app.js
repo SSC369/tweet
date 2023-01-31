@@ -145,7 +145,7 @@ app.get("/tweets", async (request, response) => {
 app.get("/user/tweets/feed/", authenticateToken, async (request, response) => {
   let query = `SELECT username, tweet, date_time AS dateTime FROM (tweet INNER JOIN follower ON tweet.user_id = follower.following_user_id) AS k
   INNER JOIN user ON k.following_user_id = user.user_id 
-  WHERE follower_user_id = (SELECT user_id FROM user WHERE username like '%${request.username}%') order by date_time limit 4;`;
+  WHERE follower_user_id = (SELECT user_id FROM user WHERE username like '%${request.username}%') order by date_time DESC limit 4;`;
   let dbResponse = await db.all(query);
   response.send(dbResponse);
 });
